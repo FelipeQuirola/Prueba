@@ -1,0 +1,30 @@
+%autoreload 2
+from src import (
+    eliminacion_gaussiana,
+    descomposicion_LU,
+    resolver_LU,
+    matriz_aumentada,
+    separar_m_aumentada,
+)
+
+
+# ####################################################################
+def calc_determinante(A: list[list[float]]) -> float:
+    """Función que calcula el determinante usando descomposición LU
+
+    ## Parameters
+    ``A``: Matriz cuadrada de tamaño n x n
+
+    ## Return
+    ``detA``: Determinante de la matriz A
+
+    """
+    # Calculamos la descomposición LU
+    L, U = descomposicion_LU(A)
+    
+    # El determinante de A es el producto de los elementos diagonales de U
+    detA = 1.0
+    for i in range(len(U)):
+        detA *= U[i][i]
+    
+    return detA
