@@ -9,22 +9,21 @@ from src import (
 
 
 # ####################################################################
-def calc_determinante(A: list[list[float]]) -> float:
-    """Función que calcula el determinante usando descomposición LU
-
-    ## Parameters
-    ``A``: Matriz cuadrada de tamaño n x n
-
-    ## Return
-    ``detA``: Determinante de la matriz A
-
-    """
-    # Calculamos la descomposición LU
-    L, U = descomposicion_LU(A)
-    
-    # El determinante de A es el producto de los elementos diagonales de U
-    detA = 1.0
-    for i in range(len(U)):
-        detA *= U[i][i]
+def calc_determinante(A):
+    """Función que calcula el determinante usando descomposición LU o método alternativo"""
+    try:
+        # Intentamos calcular la descomposición LU
+        L, U = descomposicion_LU(A)
+        
+        # El determinante de A es el producto de los elementos diagonales de U
+        detA = 1.0
+        for i in range(len(U)):
+            detA *= U[i][i]
+        
+    except ValueError as e:
+        # En caso de error (matriz no invertible), calcular determinante manualmente
+        detA = 0.0
+        for i in range(len(A)):
+            detA += (-1)**i * A[0][i] * calc_determinante([row[:i] + row[i+1:] for row in A[1:]])
     
     return detA
